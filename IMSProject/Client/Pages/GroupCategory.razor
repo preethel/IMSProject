@@ -1,0 +1,56 @@
+﻿@page "/groupcategory"
+@page "/groupcategory/{id:int}"
+@inject ICategoryGroupService CategoryGroupService
+
+@if(Id == null)
+{
+    <PageTitle>Create a new CategoryGroup</PageTitle>
+    <h3>Create a new CategoryGroup</h3>
+}
+else
+{
+    <PageTitle>@groupCategory.Title</PageTitle>
+    <h3>@groupCategory.Title</h3>
+}
+<EditForm Model="groupCategory" OnSubmit="HandleSubmit">
+    <div>
+        <label for="title">Title</label>
+        <InputText id="title" @bind-Value="groupCategory.Title" class="form-control"></InputText>
+    </div>
+    <button type="submit" class="btn btn-primary">@btnText</button>
+    <button type="button" class="btn btn-danger" @onclick="DeleteCategoryGroup" >Delete</button>
+</EditForm>
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+    string btnText = string.Empty;
+    CategoryGroup groupCategory = new CategoryGroup();
+
+    protected override async Task OnInitializedAsync()
+    {
+        btnText = Id == null ? "Create" : "Update";
+        await CategoryGroupService.GetCategoryGroups();
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        if(Id != null)
+        {
+            groupCategory = await CategoryGroupService.GetCategoryGroupById((int)Id);
+        }
+    }
+    async Task HandleSubmit()
+    {
+        if(Id == null)
+        {
+            await CategoryGroupService.CreateCategoryGroup(groupCategory);
+        }
+        else
+        {
+            await CategoryGroupService.UpdateCategoryGroup(groupCategory);
+        }
+    }
+    async Task DeleteCategoryGroup()
+    {
+        await CategoryGroupService.DeleteCategoryGroup(groupCategory.Id);
+    }
+}

@@ -1,0 +1,51 @@
+﻿@page "/categories"
+@inject ICategoryService CategoryService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Categories</PageTitle>
+<h3>Categories</h3>
+
+<button class="btn btn-primary" style="float:right" @onclick="CreateNewCategory">Create</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Category Group</th>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in CategoryService.ClientCategories)
+        {
+            <tr>
+                <td>@c.CategoryGroup.Title</td>
+                <td>@c.Id</td>
+                <td>@c.Title</td>
+                <td>@c.Description</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="(()=>ShowCategory(c.Id))"><i class="oi oi-pencil" />Edit</button>
+                    <button class="btn btn-danger" @onclick="(()=>ShowCategory(c.Id))"><i class="oi oi-trash"/>Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await CategoryService.GetCategories();
+    }
+
+    void ShowCategory(int id)
+    {
+        NavigationManager.NavigateTo($"category/{id}");
+    }
+
+    void CreateNewCategory()
+    {
+        NavigationManager.NavigateTo("/category");
+    }
+}

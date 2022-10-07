@@ -1,0 +1,62 @@
+﻿@page "/items"
+@inject IItemService ItemService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Items</PageTitle>
+<h1 class=" display-3">Item List</h1>
+<button class="btn btn-primary" style="float:right" @onclick="CreateNewItem">Create</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Category Group</th>
+            <th>Catagory</th>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Ammount</th>
+            <th>Selling Price</th>
+            <th>Action</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ItemService.Items)
+       {
+           <tr>
+            <td>@item.Category.CategoryGroup.Title</td>
+            <td>@item.Category.Title</td>
+            <td>@item.Id</td>
+            <td>@item.Title</td>
+            <td>@item.Description</td>
+            <td>@item.Quantity @item.Unit.Type</td>
+            <td>@item.Ammount Taka</td>
+            <td>@item.SellingPrice Taka</td>
+            <td>
+            <button class="btn btn-primary" @onclick="(()=> ShowItem(item.Id))"><i class="oi oi-pencil"/>Edit</button>
+            <button class="btn btn-danger" @onclick="(()=> ShowItem(item.Id))"><i class="oi oi-trash"/>Delete</button>
+            </td>
+           </tr>
+       }
+        
+    </tbody>
+</table>
+
+@code {
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await ItemService.GetItems();
+        
+    }
+
+    void ShowItem(int id)
+    {
+        NavigationManager.NavigateTo($"item/{id}");
+    }
+    void CreateNewItem()
+    {
+        NavigationManager.NavigateTo("/item");
+    }
+    
+}

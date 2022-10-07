@@ -1,0 +1,48 @@
+﻿@page "/groupcategories"
+@inject ICategoryGroupService CategoryGroupService
+@inject NavigationManager NavigationManager
+
+
+<PageTitle>Category Groups</PageTitle>
+<h2>Category Groups</h2>
+
+<button class="btn btn-primary" style="float:right" @onclick="CreateNewCategoryGroup">Create</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cg in CategoryGroupService.GroupsCategory)
+        {
+            <tr>
+                <td>@cg.Id</td>
+                <td>@cg.Title</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="(()=>ShowCategoryGroup(cg.Id))"><i class="oi oi-pencil" />Edit</button>
+                    <button class="btn btn-danger" @onclick="(()=>ShowCategoryGroup(cg.Id))"><i class="oi oi-trash"/>Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        await CategoryGroupService.GetCategoryGroups();
+    }
+    void ShowCategoryGroup(int id)
+    {
+        NavigationManager.NavigateTo($"groupcategory/{id}");
+    }
+    void CreateNewCategoryGroup()
+    {
+        NavigationManager.NavigateTo("/groupcategory");
+    }
+}
