@@ -1,6 +1,8 @@
 ﻿@page "/measurementunits"
 @inject IUnitService UnitService
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
 <PageTitle>Measurement Units</PageTitle>
 <h3>Measurement Units</h3>
 
@@ -22,8 +24,10 @@
                 <td>@unit.Type</td>
                 <td>@unit.Description</td>
                 <td>
-                    <button class="btn btn-primary" @onclick="(()=>ShowUnit(unit.Id))"><i class="oi oi-pencil" />Edit</button>
-                    <button class="btn btn-danger" @onclick="(()=>ShowUnit(unit.Id))"><i class="oi oi-trash"/>Delete</button>
+                    <button class="btn btn-primary" @onclick="(()=>ShowUnit(unit.Id))"><i class="oi oi-pencil" /></button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" @onclick="(()=>DeleteItem(unit.Id))"><i class="oi oi-trash"/></button>
                 </td>
             </tr>
         }
@@ -44,5 +48,13 @@
     void CreateNewUnit()
     {
         NavigationManager.NavigateTo("/measurementunit");
+    }
+    async Task DeleteItem(int id)
+    {
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+        if (confirmed)
+        {
+            await UnitService.DeleteUnit(id);
+        }
     }
 }

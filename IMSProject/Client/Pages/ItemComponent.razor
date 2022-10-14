@@ -1,7 +1,7 @@
 ﻿@page "/item"
 @page "/item/{id:int}"
 @inject IItemService ItemService
-
+@inject NavigationManager NavigationManager
 @if(Id == null)
 {
     <PageTitle>Create a new Item</PageTitle>
@@ -54,10 +54,10 @@ else
         <label for="sellingPrice">Selling Price</label>
         <input id="sellingPrice" @bind="item.SellingPrice" class="form-control" />
     </div>
-   
+   <br />
     
     <button type="submit" class="btn btn-outline-primary">@btnText</button>
-    <button type="button" class="btn btn-danger" @onclick="DeleteItem">Delete</button>
+    <a class="btn btn-primary" @onclick="GoBack">Back</a>
 </EditForm>
 
 @code {
@@ -102,8 +102,8 @@ else
             await ItemService.UpdateItem(item);
         }
     }
-    async Task DeleteItem()
+    void GoBack()
     {
-        await ItemService.DeleteItem(item.Id);
+        NavigationManager.NavigateTo("/items");
     }
 }

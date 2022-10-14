@@ -1,6 +1,7 @@
 ﻿@page "/items"
 @inject IItemService ItemService
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
 
 <PageTitle>Items</PageTitle>
 <h1 class=" display-3">Item List</h1>
@@ -33,8 +34,9 @@
             <td>@item.Ammount Taka</td>
             <td>@item.SellingPrice Taka</td>
             <td>
-            <button class="btn btn-primary" @onclick="(()=> ShowItem(item.Id))"><i class="oi oi-pencil"/>Edit</button>
-            <button class="btn btn-danger" @onclick="(()=> ShowItem(item.Id))"><i class="oi oi-trash"/>Delete</button>
+            <button class="btn btn-primary" @onclick="(()=> ShowItem(item.Id))"><i class="oi oi-pencil"/></button></td>
+            <td>
+            <button class="btn btn-danger" @onclick="(()=> DeleteItem(item.Id))"><i class="oi oi-trash"/></button>
             </td>
            </tr>
        }
@@ -58,5 +60,16 @@
     {
         NavigationManager.NavigateTo("/item");
     }
-    
+    //async Task DeleteItem(int id)
+    //{
+    //    await ItemService.DeleteItem(id);
+    //}
+    async Task DeleteItem(int id)
+    {
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+        if (confirmed)
+        {
+            await ItemService.DeleteItem(id);
+        }
+    }
 }

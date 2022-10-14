@@ -1,0 +1,71 @@
+﻿@page "/cof"
+@page "/cof/{id:int}"
+@inject ICOFService COFService
+@inject NavigationManager NavigationManager
+@if(Id == null)
+{
+    <PageTitle>Create a New Chart of Account</PageTitle>
+    <h3>Create a New Chart of Account</h3>
+}
+else
+{
+    <PageTitle>@cof.Name</PageTitle>
+    <h3>@cof.Name</h3>
+}
+<EditForm Model="cof" OnSubmit="HandleSubmit">
+    <div>
+        <label>Title</label><br/>
+        <InputSelect @bind-Value="cof.Name" class="form-select">
+            <option value="asset">Asset</option>
+            <option value="liabilities">Liabilities</option>
+            <option value="equity">Equity</option>
+            <option value="revenue">Revenue</option>
+            <option value="COGOS">C.O.G.O.S.</option>
+            <option value="expenses">Expenses</option>
+        </InputSelect>
+    </div>
+
+
+
+    <button type="submit" class="btn btn-primary">@btnText</button>
+    <a class="btn btn-primary" @onclick="GoBack">Back</a>
+    
+</EditForm>
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+    string btnText = string.Empty;
+    COFmodel cof = new COFmodel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        btnText = Id == null ? "Create" : "Update";
+        await COFService.GetCOF();
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        if(Id != null)
+        {
+            cof = await COFService.GetCOFById((int)Id);
+        }
+    }
+    async Task HandleSubmit()
+    {
+        if(Id == null)
+        {
+            await COFService.CreateCOF(cof);
+        }
+        else
+        {
+            await COFService.UpdateCOF(cof);
+        }
+    }
+    void GoBack()
+    {
+        NavigationManager.NavigateTo("/cofs");
+    }
+    //async Task DeleteUnit()
+    //{
+    //    await UnitService.DeleteUnit(unit.Id);
+    //}
+}

@@ -1,7 +1,7 @@
 ﻿@page "/category"
 @page "/category/{id:int}"
 @inject ICategoryService CategoryService
-
+@inject NavigationManager NavigationManager
 @if (Id == null)
 {
     <PageTitle>Create a new Category</PageTitle>
@@ -33,7 +33,8 @@ else
     </div>
     <br />
     <button type="submit" class="btn btn-primary">@btnText</button>
-    <button type="button" class="btn btn-danger" @onclick="DeleteCategory">Delete</button>
+    <a class="btn btn-primary" @onclick="GoBack">Back</a>
+    @*<button type="button" class="btn btn-primary" onclick="GoBack">Back</button>*@
 </EditForm>
 
 @code {
@@ -74,9 +75,12 @@ else
             await CategoryService.UpdateCategory(category);
         }
     }
-
-    async Task DeleteCategory()
+    void GoBack()
     {
-        await CategoryService.DeleteCategory(category.Id);
+        NavigationManager.NavigateTo("/categories");
     }
+    //async Task DeleteCategory()
+    //{
+    //    await CategoryService.DeleteCategory(category.Id);
+    //}
 }

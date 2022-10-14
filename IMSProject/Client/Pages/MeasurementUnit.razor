@@ -1,7 +1,7 @@
 ﻿@page "/measurementunit"
 @page "/measurementunit/{id:int}"
 @inject IUnitService UnitService
-
+@inject NavigationManager NavigationManager
 @if(Id == null)
 {
     <PageTitle>Create a new Unit</PageTitle>
@@ -21,8 +21,10 @@ else
         <label for="description">Description</label>
         <InputText id="description" @bind-Value="unit.Description" class="form-control"></InputText>
     </div>
+    <br />
     <button type="submit" class="btn btn-primary">@btnText</button>
-    <button type="button" class="btn btn-danger" @onclick="DeleteUnit" >Delete</button>
+    <a class="btn btn-primary" @onclick="GoBack">Back</a>
+    
 </EditForm>
 @code {
     [Parameter]
@@ -53,8 +55,12 @@ else
             await UnitService.UpdateUnit(unit);
         }
     }
-    async Task DeleteUnit()
+    void GoBack()
     {
-        await UnitService.DeleteUnit(unit.Id);
+        NavigationManager.NavigateTo("/measurementunits");
     }
+    //async Task DeleteUnit()
+    //{
+    //    await UnitService.DeleteUnit(unit.Id);
+    //}
 }

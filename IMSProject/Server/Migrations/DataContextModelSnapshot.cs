@@ -62,18 +62,23 @@ namespace IMSProject.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CategoryGroups");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Title = "IMS-1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Title = "IMS-2"
-                        });
+            modelBuilder.Entity("IMSProject.Shared.COFmodel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("COFmodels");
                 });
 
             modelBuilder.Entity("IMSProject.Shared.Item", b =>

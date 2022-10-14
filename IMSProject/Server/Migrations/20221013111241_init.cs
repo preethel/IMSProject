@@ -9,17 +9,29 @@ namespace IMSProject.Server.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Categories",
+                name: "CategoryGroups",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.PrimaryKey("PK_CategoryGroups", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "COFmodels",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_COFmodels", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -34,6 +46,27 @@ namespace IMSProject.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Units", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryGroupId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Categories_CategoryGroups_CategoryGroupId",
+                        column: x => x.CategoryGroupId,
+                        principalTable: "CategoryGroups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,35 +100,10 @@ namespace IMSProject.Server.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
+            migrationBuilder.CreateIndex(
+                name: "IX_Categories_CategoryGroupId",
                 table: "Categories",
-                columns: new[] { "Id", "Description", "Title" },
-                values: new object[,]
-                {
-                    { 1, "", "Chaal" },
-                    { 2, "", "Daal" },
-                    { 3, "", "Tel" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Units",
-                columns: new[] { "Id", "Description", "Type" },
-                values: new object[,]
-                {
-                    { 1, "Kilogram", "kg" },
-                    { 2, "Liter", "L" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Items",
-                columns: new[] { "Id", "Ammount", "CategoryId", "Description", "Quantity", "SellingPrice", "Title", "UnitId" },
-                values: new object[,]
-                {
-                    { 1, 10000, 1, "NotunChaal", 500, 70, "Athais", 1 },
-                    { 2, 10000, 1, "NotunChaal", 500, 70, "Miniket", 1 },
-                    { 3, 10000, 3, "Soyabin", 500, 60, "Rupchada", 2 },
-                    { 4, 10000, 3, "ACI", 500, 90, "Moshur", 2 }
-                });
+                column: "CategoryGroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_CategoryId",
@@ -111,6 +119,9 @@ namespace IMSProject.Server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "COFmodels");
+
+            migrationBuilder.DropTable(
                 name: "Items");
 
             migrationBuilder.DropTable(
@@ -118,6 +129,9 @@ namespace IMSProject.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "Units");
+
+            migrationBuilder.DropTable(
+                name: "CategoryGroups");
         }
     }
 }

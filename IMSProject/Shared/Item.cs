@@ -23,5 +23,8 @@ namespace IMSProject.Shared
         public int CategoryId { get; set; }
         public Unit? Unit { get; set; }
         public int UnitId { get; set; }
+
+        //public Detail? Detail { get; set; }
+        //public int DetailID { get; set; }
     }
 }

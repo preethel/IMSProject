@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IMSProject.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221006100129_seed-categoryGroup")]
-    partial class seedcategoryGroup
+    [Migration("20221013111241_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,6 +31,9 @@ namespace IMSProject.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CategoryGroupId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -40,6 +43,8 @@ namespace IMSProject.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryGroupId");
 
                     b.ToTable("Categories");
                 });
@@ -59,18 +64,23 @@ namespace IMSProject.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CategoryGroups");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Title = "IMS-1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Title = "IMS-2"
-                        });
+            modelBuilder.Entity("IMSProject.Shared.COFmodel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("COFmodels");
                 });
 
             modelBuilder.Entity("IMSProject.Shared.Item", b =>
@@ -132,6 +142,17 @@ namespace IMSProject.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Units");
+                });
+
+            modelBuilder.Entity("IMSProject.Shared.Category", b =>
+                {
+                    b.HasOne("IMSProject.Shared.CategoryGroup", "CategoryGroup")
+                        .WithMany()
+                        .HasForeignKey("CategoryGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CategoryGroup");
                 });
 
             modelBuilder.Entity("IMSProject.Shared.Item", b =>

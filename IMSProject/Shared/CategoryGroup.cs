@@ -10,5 +10,8 @@ namespace IMSProject.Shared
     {
         public int Id { get; set; }
         public string Title { get; set; } = String.Empty;
+
+        //public Detail? Detail { get; set; }
+        //public int DetailD { get; set; }
     }
 }
