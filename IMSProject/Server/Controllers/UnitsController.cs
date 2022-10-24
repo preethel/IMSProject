@@ -49,6 +49,8 @@ namespace IMSProject.Server.Controllers
             if (dbunit == null)
                 return NotFound("Sorry, but unit for you");
             dbunit.Type = unit.Type;
+            dbunit.UpdatedBy = unit.UpdatedBy;
+            dbunit.UdatedAt = unit.UdatedAt;
 
             await _context.SaveChangesAsync();
             return Ok(await GetDbUnits());

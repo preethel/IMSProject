@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace IMSProject.Shared
 {
-    public class Item
+    public class Item : Detail
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         //[Column(TypeName ="decimal(18,2")]  
@@ -24,7 +24,5 @@ namespace IMSProject.Shared
         public Unit? Unit { get; set; }
         public int UnitId { get; set; }
 
-        //public Detail? Detail { get; set; }
-        //public int DetailID { get; set; }
     }
 }

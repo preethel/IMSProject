@@ -17,6 +17,9 @@ namespace IMSProject.Client.Services.CategoryService
         }
         public async Task CreateCategory(Category category)
         {
+            category.DomainStatus = true;
+            category.CreatedBy = "User";
+            category.CreatedAt = DateTime.Now.ToString();
             var result = await _http.PostAsJsonAsync("api/categories", category);
             await SetCategories(result);
         }
@@ -56,6 +59,8 @@ namespace IMSProject.Client.Services.CategoryService
 
         public async Task UpdateCategory(Category category)
         {
+            category.UpdatedBy = "User";
+            category.UdatedAt = DateTime.Now.ToString();
             var result = await _http.PutAsJsonAsync($"api/categories/{category.Id}", category);
             await SetCategories(result);
         }

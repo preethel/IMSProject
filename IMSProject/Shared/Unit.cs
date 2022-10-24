@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace IMSProject.Shared
 {
-    public class Unit
+    public class Unit : Detail
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Type { get; set; } = String.Empty;
         public string Description { get; set; } = String.Empty;
-
-        //public Detail? Detail { get; set; }
-        //public int DetailD { get; set; }
-
     }
 }

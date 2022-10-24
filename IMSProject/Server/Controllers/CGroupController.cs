@@ -49,7 +49,8 @@ namespace IMSProject.Server.Controllers
             if (dbCG == null)
                 return NotFound("Sorry, but no Group for you");
             dbCG.Title = categoryGroup.Title;
-
+            dbCG.UpdatedBy = categoryGroup.UpdatedBy;
+            dbCG.UdatedAt = categoryGroup.UdatedAt;
             await _context.SaveChangesAsync();
             return Ok(await GetDbCGroups());
         }

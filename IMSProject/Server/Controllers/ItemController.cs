@@ -27,22 +27,6 @@ namespace IMSProject.Server.Controllers
         }
 
 
-        //[HttpGet("categories")]
-        //public async Task<ActionResult<List<Category>>> GetCategories()
-        //{
-        //    var categories = await _context.Categories.ToListAsync();   
-        //    return Ok(categories);
-        //}
-
-
-        //[HttpGet("units")]
-        //public async Task<ActionResult<List<Unit>>> GetUnits()
-        //{
-        //    var units = await _context.Units.ToListAsync();
-        //    return Ok(units);
-        //}
-
-
         [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult<List<Item>>> GetSingleItems(int id)
@@ -81,7 +65,8 @@ namespace IMSProject.Server.Controllers
                 .FirstOrDefaultAsync(item => item.Id == id);
             if (dbItem == null)
                 return NotFound("Sorry, but no Item for you");
-
+            dbItem.UdatedAt = item.UdatedAt;
+            dbItem.UpdatedBy = item.UpdatedBy;
             dbItem.Title = item.Title;
             dbItem.Description = item.Description;
             dbItem.SellingPrice = item.SellingPrice;

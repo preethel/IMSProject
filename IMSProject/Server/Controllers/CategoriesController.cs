@@ -54,6 +54,8 @@ namespace IMSProject.Server.Controllers
             dbCategory.Title = category.Title;
             dbCategory.Description= category.Description;
             dbCategory.CategoryGroupId= category.CategoryGroupId;
+            dbCategory.UdatedAt = category.UdatedAt;
+            dbCategory.UpdatedBy = category.UpdatedBy;
             
             await _context.SaveChangesAsync();
 

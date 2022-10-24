@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace IMSProject.Shared
 {
-    public class Category
+    public class Category : Detail
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Title { get; set; } = String.Empty;
         public string Description { get; set; } = String.Empty;
         public CategoryGroup? CategoryGroup { get; set; }
         public int CategoryGroupId { get; set; }
 
-        //public Detail? Detail { get; set; }
-        //public int DetailD { get; set; }
     }
 }

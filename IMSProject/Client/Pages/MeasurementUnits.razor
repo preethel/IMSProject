@@ -37,6 +37,7 @@
 
 
 @code{
+    Unit unit= new Unit();
     protected override async Task OnInitializedAsync()
     {
         await UnitService.GetUnits();
@@ -55,6 +56,7 @@
         if (confirmed)
         {
             await UnitService.DeleteUnit(id);
+            //await UnitService.RemoveUnit(unit);
         }
     }
 }

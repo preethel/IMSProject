@@ -17,6 +17,9 @@ namespace IMSProject.Client.Services.CategoryGroupService
 
         public async Task CreateCategoryGroup(CategoryGroup categoryGroup)
         {
+            categoryGroup.CreatedAt = DateTime.Now.ToString();
+            categoryGroup.CreatedBy = "User";
+            categoryGroup.DomainStatus = true;
             var result = await _http.PostAsJsonAsync("api/cgroup", categoryGroup);
             await SetCategoryGroups(result);
         }
@@ -50,6 +53,8 @@ namespace IMSProject.Client.Services.CategoryGroupService
 
         public async Task UpdateCategoryGroup(CategoryGroup categoryGroup)
         {
+            categoryGroup.UpdatedBy = "User";
+            categoryGroup.UdatedAt = DateTime.Now.ToString();
             var result = await _http.PutAsJsonAsync($"api/cgroup/{categoryGroup.Id}", categoryGroup);
             await SetCategoryGroups(result);
         }

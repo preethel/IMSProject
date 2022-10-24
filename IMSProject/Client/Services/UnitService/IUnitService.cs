@@ -12,6 +12,8 @@
 
         Task UpdateUnit(Unit unit);
 
+        Task RemoveUnit(Unit unit);
+
         Task DeleteUnit(int id);
     }
 }

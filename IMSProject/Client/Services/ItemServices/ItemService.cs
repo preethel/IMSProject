@@ -49,6 +49,9 @@ namespace IMSProject.Client.Services.ItemServices
 
         public async Task CreateItem(Item item)
         {
+            item.DomainStatus = true;
+            item.CreatedAt = DateTime.Now.ToString();
+            item.CreatedBy = "User";
             var result = await _http.PostAsJsonAsync("api/item", item);
             await SetItems(result);
         }
@@ -70,6 +73,8 @@ namespace IMSProject.Client.Services.ItemServices
 
         public async Task UpdateItem(Item item)
         {
+            item.UpdatedBy = "User";
+            item.UdatedAt = DateTime.Now.ToString();
             var result = await _http.PutAsJsonAsync($"/api/item/{item.Id}", item);
 
             await SetItems(result);

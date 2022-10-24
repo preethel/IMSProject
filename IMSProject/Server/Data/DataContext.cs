@@ -13,6 +13,5 @@ namespace IMSProject.Server.Data
         public DbSet<Item> Items { get; set; }
         public DbSet<Unit> Units { get; set; }
         public DbSet<COFmodel> COFmodels { get; set; }
-        //public DbSet<Detail> Details { get; set; }
     }
 }

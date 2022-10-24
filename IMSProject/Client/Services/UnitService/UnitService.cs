@@ -17,6 +17,9 @@ namespace IMSProject.Client.Services.UnitService
 
         public async Task CreateUnit(Unit unit)
         {
+            unit.DomainStatus = true;
+            unit.CreatedAt = DateTime.Now.ToString();
+            unit.CreatedBy = "User";
             var result = await _http.PostAsJsonAsync("api/units", unit);
             await SetUnits(result);
         }
@@ -42,8 +45,18 @@ namespace IMSProject.Client.Services.UnitService
                 Unit = result;
         }
 
+        public async Task RemoveUnit(Unit unit)
+        {
+            unit.UpdatedBy = "User";
+            unit.UdatedAt = DateTime.Now.ToString();
+            var result = await _http.PutAsJsonAsync($"api/units/remove/{unit.Id}", unit);
+            await SetUnits(result);
+        }
+
         public async Task UpdateUnit(Unit unit)
         {
+            unit.UpdatedBy = "User";
+            unit.UdatedAt = DateTime.Now.ToString();
             var result = await _http.PutAsJsonAsync($"api/units/{unit.Id}", unit);
             await SetUnits(result);
         }

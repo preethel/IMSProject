@@ -17,6 +17,9 @@ namespace IMSProject.Client.Services.COFService
 
         public async Task CreateCOF(COFmodel cOFmodel)
         {
+            cOFmodel.DomainStatus = true;
+            cOFmodel.CreatedAt = DateTime.Now.ToString();
+            cOFmodel.CreatedBy = "User";
             var result = await _http.PostAsJsonAsync("api/cof", cOFmodel);
             await SetCOF(result);
         }
@@ -44,6 +47,8 @@ namespace IMSProject.Client.Services.COFService
 
         public async Task UpdateCOF(COFmodel cOFmodel)
         {
+            cOFmodel.UdatedAt = DateTime.Now.ToString();
+            cOFmodel.UpdatedBy = "User";
             var result = await _http.PutAsJsonAsync($"api/cof/{cOFmodel.Id}", cOFmodel);
             await SetCOF(result);
         }

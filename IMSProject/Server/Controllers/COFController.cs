@@ -49,7 +49,8 @@ namespace IMSProject.Server.Controllers
             if (dbCOF == null)
                 return NotFound("Sorry, but unit for you");
             dbCOF.Name= cOFmodel.Name;
-
+            dbCOF.UdatedAt = cOFmodel.UdatedAt;
+            dbCOF.UpdatedBy = cOFmodel.UpdatedBy;
             await _context.SaveChangesAsync();
             return Ok(await GetDbCOFs());
         }
