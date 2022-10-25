@@ -1,0 +1,60 @@
+﻿@page "/coas"
+@inject ICOAService COAService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+<PageTitle>Chart of Accounts</PageTitle>
+<h3>Chart of Account</h3>
+
+<button class="btn btn-primary" style="float:right" @onclick="CreateNewCOA">Create</button>
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>Id</th>*@
+            <th>Account Name</th>
+            <th>Account Type</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var coa in COAService.ChartOfAccounts)
+        {
+            <tr>
+                @*<td>@coa.Id</td>*@
+                <td>@coa.Name</td>
+                <td>@coa.Type</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="(()=>ShowCOA(coa.Id))"><i class="oi oi-pencil" /></button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" @onclick="(()=>DeleteCOA(coa.Id))"><i class="oi oi-trash"/></button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        await COAService.GetCOA();
+    }
+    void ShowCOA(int id)
+    {
+        NavigationManager.NavigateTo($"coa/{id}");
+    }
+    void CreateNewCOA()
+    {
+        NavigationManager.NavigateTo("/coa");
+    }
+    async Task DeleteCOA(int id)
+    {
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+        if (confirmed)
+        {
+            await COAService.DeleteCOA(id);
+        }
+    }
+}

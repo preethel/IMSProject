@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace IMSProject.Shared
 {
-    public class COFmodel : Detail
+    public class ChartOfAccount : Detail
     {
         //public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
+        public string Type { get; set; } = string.Empty;
 
     }
 }

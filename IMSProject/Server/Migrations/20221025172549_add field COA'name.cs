@@ -4,7 +4,7 @@
 
 namespace IMSProject.Server.Migrations
 {
-    public partial class init : Migration
+    public partial class addfieldCOAname : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,12 +27,13 @@ namespace IMSProject.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "COFmodels",
+                name: "chartOfAccounts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -41,7 +42,7 @@ namespace IMSProject.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_COFmodels", x => x.Id);
+                    table.PrimaryKey("PK_chartOfAccounts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -144,7 +145,7 @@ namespace IMSProject.Server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "COFmodels");
+                name: "chartOfAccounts");
 
             migrationBuilder.DropTable(
                 name: "Items");

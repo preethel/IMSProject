@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IMSProject.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221024144923_init")]
-    partial class init
+    [Migration("20221025172549_add field COA'name")]
+    partial class addfieldCOAname
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -104,7 +104,7 @@ namespace IMSProject.Server.Migrations
                     b.ToTable("CategoryGroups");
                 });
 
-            modelBuilder.Entity("IMSProject.Shared.COFmodel", b =>
+            modelBuilder.Entity("IMSProject.Shared.ChartOfAccount", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -127,6 +127,10 @@ namespace IMSProject.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UdatedAt")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -137,7 +141,7 @@ namespace IMSProject.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("COFmodels");
+                    b.ToTable("chartOfAccounts");
                 });
 
             modelBuilder.Entity("IMSProject.Shared.Item", b =>

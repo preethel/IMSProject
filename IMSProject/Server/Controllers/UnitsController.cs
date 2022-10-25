@@ -61,7 +61,7 @@ namespace IMSProject.Server.Controllers
         {
             var dbunit = await _context.Units.FirstOrDefaultAsync(unit => unit.Id == id);
             if (dbunit== null)
-                return NotFound("Sorry, but no Group for you");
+                return NotFound("Sorry, but unit for you");
 
             _context.Units.Remove(dbunit);
             await _context.SaveChangesAsync();

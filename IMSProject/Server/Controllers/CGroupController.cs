@@ -47,7 +47,7 @@ namespace IMSProject.Server.Controllers
         {
             var dbCG = await _context.CategoryGroups.FirstOrDefaultAsync(cg => cg.Id == id);
             if (dbCG == null)
-                return NotFound("Sorry, but no Group for you");
+                return NotFound("Sorry, no category group here.");
             dbCG.Title = categoryGroup.Title;
             dbCG.UpdatedBy = categoryGroup.UpdatedBy;
             dbCG.UdatedAt = categoryGroup.UdatedAt;
@@ -60,7 +60,7 @@ namespace IMSProject.Server.Controllers
         {
             var dbCG = await _context.CategoryGroups.FirstOrDefaultAsync(cg => cg.Id == id);
             if (dbCG == null)
-                return NotFound("Sorry, but no Group for you");
+                return NotFound("Sorry, no category group here.");
 
             _context.CategoryGroups.Remove(dbCG);
             await _context.SaveChangesAsync();

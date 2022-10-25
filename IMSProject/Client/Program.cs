@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using IMSProject.Client.Services.CategoryGroupService;
 using IMSProject.Client.Services.UnitService;
 using IMSProject.Client.Services.CategoryService;
-using IMSProject.Client.Services.COFService;
+using IMSProject.Client.Services.COAService;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -16,7 +16,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<ICategoryGroupService, CategoryGroupService>();
-builder.Services.AddScoped<ICOFService, COFService>();
+builder.Services.AddScoped<ICOAService, COAService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IUnitService, UnitService>();
 await builder.Build().RunAsync();
